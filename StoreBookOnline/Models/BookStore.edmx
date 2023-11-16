@@ -1,0 +1,655 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BookStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="Username" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="DonDatHangs">
+          <Key>
+            <PropertyRef Name="MaDDH" />
+          </Key>
+          <Property Name="MaDDH" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaKH" Type="int" Nullable="false" />
+          <Property Name="MaSach" Type="int" Nullable="false" />
+          <Property Name="KhachHang_MaKhach" Type="int" />
+          <Property Name="HoaDon_MaHD" Type="int" />
+          <Property Name="KhachHang_MaKhach1" Type="int" />
+        </EntityType>
+        <EntityType Name="GioHangs">
+          <Key>
+            <PropertyRef Name="MaGH" />
+          </Key>
+          <Property Name="MaGH" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SoLuong" Type="int" Nullable="false" />
+          <Property Name="ThanhTien" Type="int" Nullable="false" />
+          <Property Name="MaSach" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HoaDons">
+          <Key>
+            <PropertyRef Name="MaHD" />
+          </Key>
+          <Property Name="MaHD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaAdmin" Type="int" Nullable="false" />
+          <Property Name="Admin_Id" Type="int" />
+          <Property Name="DonDatHang_MaDDH" Type="int" />
+          <Property Name="Admin_Id1" Type="int" />
+        </EntityType>
+        <EntityType Name="KhachHangs">
+          <Key>
+            <PropertyRef Name="MaKhach" />
+          </Key>
+          <Property Name="MaKhach" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HoTen" Type="nvarchar(max)" />
+          <Property Name="Username" Type="nvarchar(max)" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="SDT" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="DiaChi" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="NCC_Sach">
+          <Key>
+            <PropertyRef Name="MaNCCSach" />
+          </Key>
+          <Property Name="MaNCCSach" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaSach" Type="int" Nullable="false" />
+          <Property Name="MaNCC" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NhaCungCaps">
+          <Key>
+            <PropertyRef Name="MaNCC" />
+          </Key>
+          <Property Name="MaNCC" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenNCC" Type="nvarchar(max)" />
+          <Property Name="DiaChi" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Saches">
+          <Key>
+            <PropertyRef Name="MaSach" />
+          </Key>
+          <Property Name="MaSach" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenSach" Type="nvarchar(max)" />
+          <Property Name="Anh" Type="nvarchar(max)" />
+          <Property Name="TacGia" Type="nvarchar(max)" />
+          <Property Name="SoLuongTon" Type="int" />
+          <Property Name="DonGia" Type="real" />
+          <Property Name="ChiTiet" Type="nvarchar(max)" />
+          <Property Name="TheLoaiSach_MaLoai" Type="int" />
+        </EntityType>
+        <EntityType Name="TheLoaiSaches">
+          <Key>
+            <PropertyRef Name="MaLoai" />
+          </Key>
+          <Property Name="MaLoai" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenLoai" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach1">
+          <End Role="KhachHangs" Type="Self.KhachHangs" Multiplicity="0..1" />
+          <End Role="DonDatHangs" Type="Self.DonDatHangs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KhachHangs">
+              <PropertyRef Name="MaKhach" />
+            </Principal>
+            <Dependent Role="DonDatHangs">
+              <PropertyRef Name="KhachHang_MaKhach1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_DonDatHangs_dbo_Saches_MaSach">
+          <End Role="Saches" Type="Self.Saches" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DonDatHangs" Type="Self.DonDatHangs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Saches">
+              <PropertyRef Name="MaSach" />
+            </Principal>
+            <Dependent Role="DonDatHangs">
+              <PropertyRef Name="MaSach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_GioHangs_dbo_Saches_MaSach">
+          <End Role="Saches" Type="Self.Saches" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="GioHangs" Type="Self.GioHangs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Saches">
+              <PropertyRef Name="MaSach" />
+            </Principal>
+            <Dependent Role="GioHangs">
+              <PropertyRef Name="MaSach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_HoaDons_dbo_Admins_Admin_Id1">
+          <End Role="Admins" Type="Self.Admins" Multiplicity="0..1" />
+          <End Role="HoaDons" Type="Self.HoaDons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HoaDons">
+              <PropertyRef Name="Admin_Id1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_NCC_Sach_dbo_NhaCungCaps_MaNCC">
+          <End Role="NhaCungCaps" Type="Self.NhaCungCaps" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NCC_Sach" Type="Self.NCC_Sach" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhaCungCaps">
+              <PropertyRef Name="MaNCC" />
+            </Principal>
+            <Dependent Role="NCC_Sach">
+              <PropertyRef Name="MaNCC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_NCC_Sach_dbo_Saches_MaSach">
+          <End Role="Saches" Type="Self.Saches" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NCC_Sach" Type="Self.NCC_Sach" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Saches">
+              <PropertyRef Name="MaSach" />
+            </Principal>
+            <Dependent Role="NCC_Sach">
+              <PropertyRef Name="MaSach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Saches_dbo_TheLoaiSaches_TheLoaiSach_MaLoai">
+          <End Role="TheLoaiSaches" Type="Self.TheLoaiSaches" Multiplicity="0..1" />
+          <End Role="Saches" Type="Self.Saches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TheLoaiSaches">
+              <PropertyRef Name="MaLoai" />
+            </Principal>
+            <Dependent Role="Saches">
+              <PropertyRef Name="TheLoaiSach_MaLoai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookStoreModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DonDatHangs" EntityType="Self.DonDatHangs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GioHangs" EntityType="Self.GioHangs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HoaDons" EntityType="Self.HoaDons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KhachHangs" EntityType="Self.KhachHangs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NCC_Sach" EntityType="Self.NCC_Sach" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NhaCungCaps" EntityType="Self.NhaCungCaps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Saches" EntityType="Self.Saches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TheLoaiSaches" EntityType="Self.TheLoaiSaches" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach1" Association="Self.FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach1">
+            <End Role="KhachHangs" EntitySet="KhachHangs" />
+            <End Role="DonDatHangs" EntitySet="DonDatHangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_DonDatHangs_dbo_Saches_MaSach" Association="Self.FK_dbo_DonDatHangs_dbo_Saches_MaSach">
+            <End Role="Saches" EntitySet="Saches" />
+            <End Role="DonDatHangs" EntitySet="DonDatHangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_GioHangs_dbo_Saches_MaSach" Association="Self.FK_dbo_GioHangs_dbo_Saches_MaSach">
+            <End Role="Saches" EntitySet="Saches" />
+            <End Role="GioHangs" EntitySet="GioHangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_HoaDons_dbo_Admins_Admin_Id1" Association="Self.FK_dbo_HoaDons_dbo_Admins_Admin_Id1">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="HoaDons" EntitySet="HoaDons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_NCC_Sach_dbo_NhaCungCaps_MaNCC" Association="Self.FK_dbo_NCC_Sach_dbo_NhaCungCaps_MaNCC">
+            <End Role="NhaCungCaps" EntitySet="NhaCungCaps" />
+            <End Role="NCC_Sach" EntitySet="NCC_Sach" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_NCC_Sach_dbo_Saches_MaSach" Association="Self.FK_dbo_NCC_Sach_dbo_Saches_MaSach">
+            <End Role="Saches" EntitySet="Saches" />
+            <End Role="NCC_Sach" EntitySet="NCC_Sach" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Saches_dbo_TheLoaiSaches_TheLoaiSach_MaLoai" Association="Self.FK_dbo_Saches_dbo_TheLoaiSaches_TheLoaiSach_MaLoai">
+            <End Role="TheLoaiSaches" EntitySet="TheLoaiSaches" />
+            <End Role="Saches" EntitySet="Saches" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HoaDons" Relationship="Self.FK_dbo_HoaDons_dbo_Admins_Admin_Id" FromRole="Admins" ToRole="HoaDons" />
+          <NavigationProperty Name="HoaDons1" Relationship="BookStoreModel.FK_dbo_HoaDons_dbo_Admins_Admin_Id1" FromRole="Admin" ToRole="HoaDon" />
+        </EntityType>
+        <EntityType Name="DonDatHang">
+          <Key>
+            <PropertyRef Name="MaDDH" />
+          </Key>
+          <Property Name="MaDDH" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaKH" Type="Int32" Nullable="false" />
+          <Property Name="MaSach" Type="Int32" Nullable="false" />
+          <Property Name="KhachHang_MaKhach" Type="Int32" />
+          <NavigationProperty Name="KhachHang" Relationship="Self.FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach" FromRole="DonDatHangs" ToRole="KhachHangs" />
+          <NavigationProperty Name="Sach" Relationship="Self.FK_dbo_DonDatHangs_dbo_Saches_MaSach" FromRole="DonDatHangs" ToRole="Saches" />
+          <Property Name="HoaDon_MaHD" Type="Int32" />
+          <Property Name="KhachHang_MaKhach1" Type="Int32" />
+          <NavigationProperty Name="KhachHang1" Relationship="BookStoreModel.FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach1" FromRole="DonDatHang" ToRole="KhachHang" />
+        </EntityType>
+        <EntityType Name="GioHang">
+          <Key>
+            <PropertyRef Name="MaGH" />
+          </Key>
+          <Property Name="MaGH" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SoLuong" Type="Int32" Nullable="false" />
+          <Property Name="ThanhTien" Type="Int32" Nullable="false" />
+          <Property Name="MaSach" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Sach" Relationship="Self.FK_dbo_GioHangs_dbo_Saches_MaSach" FromRole="GioHangs" ToRole="Saches" />
+        </EntityType>
+        <EntityType Name="HoaDon">
+          <Key>
+            <PropertyRef Name="MaHD" />
+          </Key>
+          <Property Name="MaHD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaAdmin" Type="Int32" Nullable="false" />
+          <Property Name="Admin_Id" Type="Int32" />
+          <NavigationProperty Name="Admin" Relationship="Self.FK_dbo_HoaDons_dbo_Admins_Admin_Id" FromRole="HoaDons" ToRole="Admins" />
+          <Property Name="DonDatHang_MaDDH" Type="Int32" />
+          <Property Name="Admin_Id1" Type="Int32" />
+          <NavigationProperty Name="Admin1" Relationship="BookStoreModel.FK_dbo_HoaDons_dbo_Admins_Admin_Id1" FromRole="HoaDon" ToRole="Admin" />
+        </EntityType>
+        <EntityType Name="KhachHang">
+          <Key>
+            <PropertyRef Name="MaKhach" />
+          </Key>
+          <Property Name="MaKhach" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HoTen" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SDT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DonDatHangs" Relationship="Self.FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach" FromRole="KhachHangs" ToRole="DonDatHangs" />
+          <NavigationProperty Name="DonDatHangs1" Relationship="BookStoreModel.FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach1" FromRole="KhachHang" ToRole="DonDatHang" />
+        </EntityType>
+        <EntityType Name="NCC_Sach">
+          <Key>
+            <PropertyRef Name="MaNCCSach" />
+          </Key>
+          <Property Name="MaNCCSach" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaSach" Type="Int32" Nullable="false" />
+          <Property Name="MaNCC" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NhaCungCap" Relationship="Self.FK_dbo_NCC_Sach_dbo_NhaCungCaps_MaNCC" FromRole="NCC_Sach" ToRole="NhaCungCaps" />
+          <NavigationProperty Name="Sach" Relationship="Self.FK_dbo_NCC_Sach_dbo_Saches_MaSach" FromRole="NCC_Sach" ToRole="Saches" />
+        </EntityType>
+        <EntityType Name="NhaCungCap">
+          <Key>
+            <PropertyRef Name="MaNCC" />
+          </Key>
+          <Property Name="MaNCC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenNCC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NCC_Sach" Relationship="Self.FK_dbo_NCC_Sach_dbo_NhaCungCaps_MaNCC" FromRole="NhaCungCaps" ToRole="NCC_Sach" />
+        </EntityType>
+        <EntityType Name="Sach">
+          <Key>
+            <PropertyRef Name="MaSach" />
+          </Key>
+          <Property Name="MaSach" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenSach" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Anh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TacGia" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SoLuongTon" Type="Int32" />
+          <Property Name="DonGia" Type="Single" />
+          <Property Name="ChiTiet" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TheLoaiSach_MaLoai" Type="Int32" />
+          <NavigationProperty Name="DonDatHangs" Relationship="Self.FK_dbo_DonDatHangs_dbo_Saches_MaSach" FromRole="Saches" ToRole="DonDatHangs" />
+          <NavigationProperty Name="GioHangs" Relationship="Self.FK_dbo_GioHangs_dbo_Saches_MaSach" FromRole="Saches" ToRole="GioHangs" />
+          <NavigationProperty Name="NCC_Sach" Relationship="Self.FK_dbo_NCC_Sach_dbo_Saches_MaSach" FromRole="Saches" ToRole="NCC_Sach" />
+          <NavigationProperty Name="TheLoaiSach" Relationship="Self.FK_dbo_Saches_dbo_TheLoaiSaches_TheLoaiSach_MaLoai" FromRole="Saches" ToRole="TheLoaiSaches" />
+        </EntityType>
+        <EntityType Name="TheLoaiSach">
+          <Key>
+            <PropertyRef Name="MaLoai" />
+          </Key>
+          <Property Name="MaLoai" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenLoai" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Saches" Relationship="Self.FK_dbo_Saches_dbo_TheLoaiSaches_TheLoaiSach_MaLoai" FromRole="TheLoaiSaches" ToRole="Saches" />
+        </EntityType>
+        <Association Name="FK_dbo_HoaDons_dbo_Admins_Admin_Id">
+          <End Role="Admins" Type="Self.Admin" Multiplicity="0..1" />
+          <End Role="HoaDons" Type="Self.HoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HoaDons">
+              <PropertyRef Name="Admin_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach">
+          <End Role="KhachHangs" Type="Self.KhachHang" Multiplicity="0..1" />
+          <End Role="DonDatHangs" Type="Self.DonDatHang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KhachHangs">
+              <PropertyRef Name="MaKhach" />
+            </Principal>
+            <Dependent Role="DonDatHangs">
+              <PropertyRef Name="KhachHang_MaKhach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_DonDatHangs_dbo_Saches_MaSach">
+          <End Role="Saches" Type="Self.Sach" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DonDatHangs" Type="Self.DonDatHang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Saches">
+              <PropertyRef Name="MaSach" />
+            </Principal>
+            <Dependent Role="DonDatHangs">
+              <PropertyRef Name="MaSach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_GioHangs_dbo_Saches_MaSach">
+          <End Role="Saches" Type="Self.Sach" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="GioHangs" Type="Self.GioHang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Saches">
+              <PropertyRef Name="MaSach" />
+            </Principal>
+            <Dependent Role="GioHangs">
+              <PropertyRef Name="MaSach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_NCC_Sach_dbo_NhaCungCaps_MaNCC">
+          <End Role="NhaCungCaps" Type="Self.NhaCungCap" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NCC_Sach" Type="Self.NCC_Sach" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhaCungCaps">
+              <PropertyRef Name="MaNCC" />
+            </Principal>
+            <Dependent Role="NCC_Sach">
+              <PropertyRef Name="MaNCC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_NCC_Sach_dbo_Saches_MaSach">
+          <End Role="Saches" Type="Self.Sach" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NCC_Sach" Type="Self.NCC_Sach" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Saches">
+              <PropertyRef Name="MaSach" />
+            </Principal>
+            <Dependent Role="NCC_Sach">
+              <PropertyRef Name="MaSach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Saches_dbo_TheLoaiSaches_TheLoaiSach_MaLoai">
+          <End Role="TheLoaiSaches" Type="Self.TheLoaiSach" Multiplicity="0..1" />
+          <End Role="Saches" Type="Self.Sach" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TheLoaiSaches">
+              <PropertyRef Name="MaLoai" />
+            </Principal>
+            <Dependent Role="Saches">
+              <PropertyRef Name="TheLoaiSach_MaLoai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookStoreEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="DonDatHangs" EntityType="Self.DonDatHang" />
+          <EntitySet Name="GioHangs" EntityType="Self.GioHang" />
+          <EntitySet Name="HoaDons" EntityType="Self.HoaDon" />
+          <EntitySet Name="KhachHangs" EntityType="Self.KhachHang" />
+          <EntitySet Name="NCC_Sach" EntityType="Self.NCC_Sach" />
+          <EntitySet Name="NhaCungCaps" EntityType="Self.NhaCungCap" />
+          <EntitySet Name="Saches" EntityType="Self.Sach" />
+          <EntitySet Name="TheLoaiSaches" EntityType="Self.TheLoaiSach" />
+          <AssociationSet Name="FK_dbo_HoaDons_dbo_Admins_Admin_Id" Association="Self.FK_dbo_HoaDons_dbo_Admins_Admin_Id">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="HoaDons" EntitySet="HoaDons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach" Association="Self.FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach">
+            <End Role="KhachHangs" EntitySet="KhachHangs" />
+            <End Role="DonDatHangs" EntitySet="DonDatHangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_DonDatHangs_dbo_Saches_MaSach" Association="Self.FK_dbo_DonDatHangs_dbo_Saches_MaSach">
+            <End Role="Saches" EntitySet="Saches" />
+            <End Role="DonDatHangs" EntitySet="DonDatHangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_GioHangs_dbo_Saches_MaSach" Association="Self.FK_dbo_GioHangs_dbo_Saches_MaSach">
+            <End Role="Saches" EntitySet="Saches" />
+            <End Role="GioHangs" EntitySet="GioHangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_NCC_Sach_dbo_NhaCungCaps_MaNCC" Association="Self.FK_dbo_NCC_Sach_dbo_NhaCungCaps_MaNCC">
+            <End Role="NhaCungCaps" EntitySet="NhaCungCaps" />
+            <End Role="NCC_Sach" EntitySet="NCC_Sach" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_NCC_Sach_dbo_Saches_MaSach" Association="Self.FK_dbo_NCC_Sach_dbo_Saches_MaSach">
+            <End Role="Saches" EntitySet="Saches" />
+            <End Role="NCC_Sach" EntitySet="NCC_Sach" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Saches_dbo_TheLoaiSaches_TheLoaiSach_MaLoai" Association="Self.FK_dbo_Saches_dbo_TheLoaiSaches_TheLoaiSach_MaLoai">
+            <End Role="TheLoaiSaches" EntitySet="TheLoaiSaches" />
+            <End Role="Saches" EntitySet="Saches" />
+          </AssociationSet>
+          <EntitySet Name="C__MigrationHistory" EntityType="BookStoreModel.C__MigrationHistory" />
+          <AssociationSet Name="FK_dbo_HoaDons_dbo_Admins_Admin_Id1" Association="BookStoreModel.FK_dbo_HoaDons_dbo_Admins_Admin_Id1">
+            <End Role="Admin" EntitySet="Admins" />
+            <End Role="HoaDon" EntitySet="HoaDons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach1" Association="BookStoreModel.FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach1">
+            <End Role="KhachHang" EntitySet="KhachHangs" />
+            <End Role="DonDatHang" EntitySet="DonDatHangs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_dbo_HoaDons_dbo_Admins_Admin_Id1">
+          <End Type="BookStoreModel.Admin" Role="Admin" Multiplicity="0..1" />
+          <End Type="BookStoreModel.HoaDon" Role="HoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HoaDon">
+              <PropertyRef Name="Admin_Id1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach1">
+          <End Type="BookStoreModel.KhachHang" Role="KhachHang" Multiplicity="0..1" />
+          <End Type="BookStoreModel.DonDatHang" Role="DonDatHang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KhachHang">
+              <PropertyRef Name="MaKhach" />
+            </Principal>
+            <Dependent Role="DonDatHang">
+              <PropertyRef Name="KhachHang_MaKhach1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BookStoreModelStoreContainer" CdmEntityContainer="BookStoreEntities1">
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="BookStoreModel.Admin">
+              <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DonDatHangs">
+            <EntityTypeMapping TypeName="BookStoreModel.DonDatHang">
+              <MappingFragment StoreEntitySet="DonDatHangs">
+                <ScalarProperty Name="KhachHang_MaKhach1" ColumnName="KhachHang_MaKhach1" />
+                <ScalarProperty Name="HoaDon_MaHD" ColumnName="HoaDon_MaHD" />
+                <ScalarProperty Name="MaDDH" ColumnName="MaDDH" />
+                <ScalarProperty Name="MaKH" ColumnName="MaKH" />
+                <ScalarProperty Name="MaSach" ColumnName="MaSach" />
+                <ScalarProperty Name="KhachHang_MaKhach" ColumnName="KhachHang_MaKhach" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GioHangs">
+            <EntityTypeMapping TypeName="BookStoreModel.GioHang">
+              <MappingFragment StoreEntitySet="GioHangs">
+                <ScalarProperty Name="MaGH" ColumnName="MaGH" />
+                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+                <ScalarProperty Name="ThanhTien" ColumnName="ThanhTien" />
+                <ScalarProperty Name="MaSach" ColumnName="MaSach" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HoaDons">
+            <EntityTypeMapping TypeName="BookStoreModel.HoaDon">
+              <MappingFragment StoreEntitySet="HoaDons">
+                <ScalarProperty Name="Admin_Id1" ColumnName="Admin_Id1" />
+                <ScalarProperty Name="DonDatHang_MaDDH" ColumnName="DonDatHang_MaDDH" />
+                <ScalarProperty Name="MaHD" ColumnName="MaHD" />
+                <ScalarProperty Name="MaAdmin" ColumnName="MaAdmin" />
+                <ScalarProperty Name="Admin_Id" ColumnName="Admin_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KhachHangs">
+            <EntityTypeMapping TypeName="BookStoreModel.KhachHang">
+              <MappingFragment StoreEntitySet="KhachHangs">
+                <ScalarProperty Name="MaKhach" ColumnName="MaKhach" />
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NCC_Sach">
+            <EntityTypeMapping TypeName="BookStoreModel.NCC_Sach">
+              <MappingFragment StoreEntitySet="NCC_Sach">
+                <ScalarProperty Name="MaNCCSach" ColumnName="MaNCCSach" />
+                <ScalarProperty Name="MaSach" ColumnName="MaSach" />
+                <ScalarProperty Name="MaNCC" ColumnName="MaNCC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NhaCungCaps">
+            <EntityTypeMapping TypeName="BookStoreModel.NhaCungCap">
+              <MappingFragment StoreEntitySet="NhaCungCaps">
+                <ScalarProperty Name="MaNCC" ColumnName="MaNCC" />
+                <ScalarProperty Name="TenNCC" ColumnName="TenNCC" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Saches">
+            <EntityTypeMapping TypeName="BookStoreModel.Sach">
+              <MappingFragment StoreEntitySet="Saches">
+                <ScalarProperty Name="MaSach" ColumnName="MaSach" />
+                <ScalarProperty Name="TenSach" ColumnName="TenSach" />
+                <ScalarProperty Name="Anh" ColumnName="Anh" />
+                <ScalarProperty Name="TacGia" ColumnName="TacGia" />
+                <ScalarProperty Name="SoLuongTon" ColumnName="SoLuongTon" />
+                <ScalarProperty Name="DonGia" ColumnName="DonGia" />
+                <ScalarProperty Name="ChiTiet" ColumnName="ChiTiet" />
+                <ScalarProperty Name="TheLoaiSach_MaLoai" ColumnName="TheLoaiSach_MaLoai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TheLoaiSaches">
+            <EntityTypeMapping TypeName="BookStoreModel.TheLoaiSach">
+              <MappingFragment StoreEntitySet="TheLoaiSaches">
+                <ScalarProperty Name="MaLoai" ColumnName="MaLoai" />
+                <ScalarProperty Name="TenLoai" ColumnName="TenLoai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="BookStoreModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

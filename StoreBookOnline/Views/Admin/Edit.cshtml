@@ -1,0 +1,83 @@
+﻿@model StoreBookOnline.Models.Sach
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    <div> 
+        <form action="/Admin/Edit" method="post">
+            <input value="@Model.MaSach" name="MaSach" type="hidden" />
+            <h1>Edit Product</h1>
+            <label class="form-label">Name</label>
+            <input class="form-control" name="TenSach" value="@Model.TenSach" placeholder="Input Name" />
+            <label class="form-label">Author</label>
+            <input class="form-control" name="TacGia" value="@Model.TacGia" placeholder="Input Author" />
+            <label class="form-label">Categories</label>
+            <select class="form-select" name="TheLoaiSach_MaLoai">
+                @foreach (var item in ViewBag.Cate)
+                {
+                    if (item.MaLoai == Model.TheLoaiSach_MaLoai)
+                    {
+                        <option value="@item.MaLoai" selected>@item.TenLoai</option>
+                    }
+                    else
+                    {
+                        <option value="@item.MaLoai">@item.TenLoai</option>
+                    }
+                }
+            </select>
+            <div class="row">
+                <div class="col-8">
+                    <label class="form-label">Image</label>
+                    @*<input value="@Model.Anh" name="Anh" type="hidden" />*@
+                    <input class="form-control" type="file" id="myFile" onchange="changeImg(event)" name="Anh" accept="image/png, image/jpeg" multiple />
+                </div>
+                <div class="col-4">
+                    <img src="@Model.Anh" class="w-25" id="image" />
+                </div>
+            </div>
+            @Html.LabelFor(row => row.SoLuongTon, "So luong ton", new { @class="form-label" })
+            @Html.TextBoxFor(row => row.SoLuongTon, Html.DisplayFor(row => row.SoLuongTon).ToString(), new { @class="form-control" })
+            <label class="form-label">Price</label>
+            <input class="form-control" value="@Model.DonGia" name="DonGia" />
+            <label class="form-label">Details</label>
+            <select class="form-select" name="ChiTiet">
+                @foreach (var item in ViewBag.Special)
+                {
+                    if (item == Model.ChiTiet)
+                    {
+                        <option value="@item" selected>@item</option>
+                    }
+                    else
+                    {
+                        <option value="@item">@item</option>
+                    }
+                }
+
+
+            </select>
+            <div class="d-flex mt-3 justify-content-evenly">
+                <button class="btn btn-success" type="submit">Edit</button>
+                <button class="btn btn-warning" type="reset">Reset</button>
+                <a href="/Admin/Index" class="btn btn-danger">Exit</a>
+
+            </div>
+        </form>
+    </div>
+    <script>
+        function changeImg(evt) {
+            let image = document.getElementById('image');
+            image.src = URL.createObjectURL(evt.target.files[0]);
+            //alert(image.src)
+        }
+    </script>
+</body>
+</html>

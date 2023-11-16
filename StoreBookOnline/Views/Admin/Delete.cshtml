@@ -1,0 +1,109 @@
+﻿@model StoreBookOnline.Models.Sach
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1>Delete Product</h1>
+        @using (Html.BeginForm("Delete", "Admin", FormMethod.Post, new { @class = "form" }))
+        {
+            <input value="@Model.MaSach" name="MaSach" type="hidden" />
+            @Html.LabelFor(row => row.TenSach, "Name", new { @class = "form-label" })
+            <input class="form-control" value="@Model.TenSach" readonly name="TenSach" />
+            @*@Html.TextBoxFor(row => row.TenSach, Html.DisplayFor(row => row.TenSach).ToString(), new { @class = "form-control", @readonly = "readonly" })*@
+            @Html.LabelFor(row => row.TenSach, "Author", new { @class = "form-label" })
+            @Html.TextBoxFor(row => row.TacGia, Html.DisplayFor(row => row.TacGia).ToString(), new { @class = "form-control", @readonly = "readonly" })
+            @Html.LabelFor(row => row.TheLoaiSach_MaLoai, "Categories", new { @class = "form-label" })
+            @Html.TextBoxFor(row => row.TheLoaiSach_MaLoai, Html.DisplayFor(row => row.TheLoaiSach.TenLoai).ToString(), new { @class = "form-control", @readonly = "readonly" })
+            @*<input class="form-control" name="TheLoaiSach_MaLoai" value="@Model.TheLoaiSach.TenLoai" readonly />*@
+            <div class="row">
+                <div class="col-8">
+                    @Html.LabelFor(row => row.Anh, "Image", new { @class = "form-label" })
+                    @Html.TextBoxFor(row => row.Anh, Html.DisplayFor(row => row.Anh).ToString(), new { @class = "form-control", @readonly = "readonly" })
+                    @*<label class="form-label">Image</label>
+                    <input class="form-control" type="file" id="myFile" onchange="changeImg(event)" name="Anh" accept="image/png, image/jpeg" multiple />*@
+                </div>
+                <div class="col-4">
+                    <img src="@Model.Anh" class="w-25" id="image" />
+                </div>
+            </div>
+            @Html.LabelFor(row => row.SoLuongTon, "Number", new { @class = "form-label" })
+            @Html.TextBoxFor(row => row.SoLuongTon, Html.DisplayFor(row => row.SoLuongTon).ToString(), new { @class = "form-control", @readonly = "readonly" })
+            @Html.LabelFor(row => row.DonGia, "Price", new { @class = "form-label" })
+            @Html.TextBoxFor(row => row.DonGia, Html.DisplayFor(row => row.DonGia).ToString(), new { @class = "form-control", @readonly = "readonly" })
+            @Html.LabelFor(row => row.ChiTiet, "Details", new { @class = "form-label" })
+            @Html.TextBoxFor(row => row.ChiTiet, Html.DisplayFor(row => row.ChiTiet).ToString(), new { @class = "form-control", @readonly = "readonly" })
+            <div class="d-flex mt-3 justify-content-evenly">
+                <button class="btn btn-success" type="submit">Delete</button>
+                <button class="btn btn-warning" type="reset">Reset</button>
+                <a href="/Admin/Index" class="btn btn-danger">Exit</a>
+            </div>
+        }
+    </div>
+</body>
+</html>
+
+@*<input value="@Model.MaSach" name="MaSach" type="hidden" />
+<h1>Add Product</h1>
+<label class="form-label">Name</label>
+<input class="form-control" name="TenSach" value="@Model.TenSach" placeholder="Input Name" />
+<label class="form-label">Author</label>
+<input class="form-control" name="TacGia" value="@Model.TacGia" placeholder="Input Author" />
+<label class="form-label">Categories</label>
+<select class="form-select" name="MaLoaiSach">
+    @foreach (var item in ViewBag.Cate)
+    {
+        if (item.MaLoai == Model.MaLoaiSach)
+        {
+            <option value="@item.MaLoai" selected>@item.TenLoai</option>
+        }
+        else
+        {
+            <option value="@item.MaLoai">@item.TenLoai</option>
+        }
+    }
+</select>
+<div class="row">
+    <div class="col-8">
+        <label class="form-label">Image</label>
+        <input class="form-control" type="file" id="myFile" onchange="changeImg(event)" name="Anh" accept="image/png, image/jpeg" multiple />
+    </div>
+    <div class="col-4">
+        <img src="@Model.Anh" class="w-25" id="image" />
+    </div>
+</div>
+@Html.LabelFor(row => row.SoLuongTon, "So luong ton", new { @class = "form-label" })
+@Html.TextBoxFor(row => row.SoLuongTon, Html.DisplayFor(row => row.SoLuongTon).ToString(), new { @class = "form-control" })
+<label class="form-label">Price</label>
+<input class="form-control" value="@Model.DonGia" name="DonGia" />
+<label class="form-label">Details</label>
+<select class="form-select" name="ChiTiet">
+    @foreach (var item in ViewBag.Special)
+    {
+        if (item == Model.ChiTiet)
+        {
+            <option value="@item" selected>@item</option>
+        }
+        else
+        {
+            <option value="@item">@item</option>
+        }
+    }
+
+
+</select>
+<div class="d-flex mt-3 justify-content-evenly">
+    <button class="btn btn-success" type="submit">Edit</button>
+    <button class="btn btn-warning" type="reset">Reset</button>
+    <button onclick="CloseAdd()" class="btn btn-danger">Exit</button>
+
+</div>*@

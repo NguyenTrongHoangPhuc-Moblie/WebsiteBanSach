@@ -1,0 +1,203 @@
+﻿@model List<StoreBookOnline.Models.Sach>
+@{
+    ViewBag.Title = "Admin";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1 class="mt-3">Detail Products</h1>
+        <div class="d-flex justify-content-between">
+            @using (Html.BeginForm("Index", "Admin", FormMethod.Post, new { @class = "form" }))
+            {
+                <div class="row">
+                    <div class="col col-sm-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Ten sach</span>
+                            <select name="TenSach" class="form-control">
+                                @foreach (var name in Model)
+                                {
+                                    <option value="@name.TenSach">@name.TenSach</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col col-sm-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Loai sach</span>
+                            <input class="form-control" list="names" name="MaLoai" />
+                            <datalist id="names">
+                                @foreach (var cates in ViewBag.Cate)
+                                {
+                                    <option value="@cates.TenLoai">@cates.TenLoai</option>
+                                }
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="col col-sm-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Details</span>
+                            <input class="form-control" list="deltails" name="deltail">
+                            <datalist id="deltails">
+                                @foreach (var detail in ViewBag.Detail)
+                                {
+                                    <option value="@detail">@detail</option>
+                                }
+                            </datalist>
+                        </div>
+                    </div>
+
+                </div>
+            }
+            <div class="col col-sm-3">
+                <button onclick="OpenAdd()" class="btn btn-primary">Add</button>
+            </div>
+            @using (Html.BeginForm("Index", "Admin", FormMethod.Post))
+            {
+                @Html.DropDownList("Chon ", new List<SelectListItem>()
+                   {
+                        new SelectListItem() {Text="TenSach", Value="TenSach"},
+                        new SelectListItem() {Text="DonGia", Value="DonGia"},
+                        new SelectListItem() {Text="SoLuong", Value="SoLuong"}
+                   }, new { @class="form-control" })
+            }
+            @*<form>
+            <div class="row">
+                <div class="col col-sm-3">
+                    <div class="input-group">
+                        <span class="input-group-text">Name</span>
+                        <input class="form-control" list="names" name="Name">
+                        <datalist id="names">
+                            @foreach(var name in Model)
+                            {
+                                <option value="@name.TenSach">@name.TenSach</option>
+                            }
+                        </datalist>
+                    </div>
+                </div>
+                <div class="col col-sm-3">
+                    <div class="input-group">
+                        <span class="input-group-text">Categories</span>
+                        <input class="form-control" list="cates" name="cate">
+                        <datalist id="cates">
+                            @foreach (var cates in ViewBag.Cate)
+                            {
+                                <option value="@cates.MaLoai">@cates.TenLoai</option>
+                            }
+                        </datalist>
+                    </div>
+                </div>
+                <div class="col col-sm-3">
+                    <div class="input-group">
+                        <span class="input-group-text">Details</span>
+                        <input class="form-control" list="deltails" name="deltail">
+                        <datalist id="deltails">
+                            <option value="Edge">
+                            <option value="Firefox">
+                            <option value="Chrome">
+                            <option value="Opera">
+                            <option value="Safari">
+                        </datalist>
+                    </div>
+                </div>
+                <div class="col col-sm-3">
+                    <div class="input-group">
+                        <span class="input-group-text">Sort</span>
+                        <input class="form-control" list="sorts" name="sort">
+                        <datalist id="sorts">
+                            <option value="TenSach">
+                            <option value="DonGia">
+                            <option value="SoLuongTon">
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+        </form>*@
+            @*<button onclick="OpenAdd()" class="btn btn-primary">Add</button>*@
+        </div>
+
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>MaSP</th>
+                    <th>TenSP</th>
+                    <th>TheLoai</th>
+                    <th>Anh</th>
+                    <th>TacGia</th>
+                    <th>SoLuongTon</th>
+                    <th>DonGia</th>
+                    <th>ChiTiet</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MaSach</td>
+                        <td>@item.TenSach</td>
+                        <td>@item.TheLoaiSach.TenLoai</td>
+                        <td>
+                            <img src="@item.Anh" style="width: 100px" />
+                        </td>
+                        <td>@item.TacGia</td>
+                        <td>@item.SoLuongTon</td>
+                        <td>@item.DonGia</td>
+                        <td>@item.ChiTiet</td>
+                        <td class="">
+                            <a href="/Admin/Edit?MaSach=@item.MaSach"><i class="fa-solid fa-pencil"></i></a>
+                            <a href="/Admin/Delete?MaSach=@item.MaSach"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id="FormAdd" class="container position-fixed bg-secondary p-3 text-light" style="top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9; display: none">
+            <form action="Admin/Add" method="post">
+                <h1>Add Product</h1>
+                <label class="form-label">Name</label>
+                <input class="form-control" name="TenSach" placeholder="Input Name" />
+                <label class="form-label">Categories</label>
+                <select class="form-select" name="Categories">
+                    <option value="Romance">Romance</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Romance">Romance</option>
+                </select>
+                <label class="form-label">Image</label>
+                <input type="file" name="Anh" class="form-control" />
+                <label class="form-label">Price</label>
+                <input class="form-control" name="DonGia" />
+                <label class="form-label">Details</label>
+                <select class="form-select" name="ChiTiet">
+                    <option value="Trending">Trending</option>
+                    <option value="Release">Release</option>
+                    <option value="Special">Special</option>
+                </select>
+                <div class="d-flex mt-3 justify-content-evenly">
+                    <button class="btn btn-success">Add</button>
+                    <button class="btn btn-warning">Reset</button>
+                    <button onclick="CloseAdd()" class="btn btn-danger">Exit</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <script>
+        function OpenAdd() {
+            document.getElementById('FormAdd').style.display = 'block';
+        }
+
+        function CloseAdd() {
+            document.getElementById('FormAdd').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+﻿@model List<StoreBookOnline.Models.Sach>
+
+@{
+    ViewBag.Title = "Special";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Special</title>
+    <style>
+        .carousel-control-prev-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+        }
+
+        .carousel-control-next-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid mt-5">
+        <h2 class="text-center">Special Offers</h2>
+        <div class="container bg-secondary rounded-bottom-5 rounded-start-5 d-flex" style="height: 500px; background-image: url(/Images/special.jpg); background-size: cover">
+            @*<img src="/Images/special.jpg" />*@
+            <div class="text-center m-auto justify-content-center text-light">
+                <div class="text-wrap w-50 m-auto">
+                    <h1>World Book Day Sale</h1>
+                    <p>up to 50% off<br />-TO ALL BOOKS-</p>
+                </div>
+                <div>
+                    <h4>Contact us</h4>
+                    <hr />
+                    <div class="d-flex justify-content-around">
+                        <p><i class="fa-solid fa-envelope"></i>https</p>
+                        <p><i class="fa-solid fa-phone"></i>number</p>
+                        <p><i class="fa-brands fa-facebook-f"></i>facebook</p>
+                        <p><i class="fa-brands fa-twitter"></i>twitter</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*Special Offers*@
+        <div id="special" class="carousel slide">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="d-flex justify-content-around p-5">
+                        @foreach (var book in Model.GetRange(0, 3).ToList())
+                        {
+                            var money = book.DonGia / 2;
+                            <div class="text-center text-light p-4 rounded-bottom-5 rounded-end-5 d-flex flex-column justify-content-between" style="width: 250px; height: 565px; background-color: #9C7F5B">
+                                <div>
+                                    <img src="@book.Anh" class="d-block rounded-bottom-5 rounded-end-5" alt="..." style="width: 191px; height: 300px" />
+                                    <div class="d-block" style="word-wrap: break-word;">
+                                        <h6 class="fw-bold">@book.TenSach</h6>
+                                        <div class="d-flex justify-content-between align-items-center" style="">
+                                            <p class="text-break opacity-50 text-lg-start m-0">@book.TacGia</p>
+                                            <i class="fa-solid fa-heart my-lg-1"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-lg-start" style="align-items: baseline">
+                                    <p style="font-size: 18px">@money$ <del style="font-size: 15px">@book.DonGia$</del></p>
+                                    <form action="javascript:void(0)">
+                                        <input name="MaSach" value="@book.MaSach" type="hidden" id="id" />
+                                        <input name="SoLuong" value="1" type="hidden" id="number" />
+                                        <input name="ThanhTien" value="@book.DonGia" type="hidden" id="money" />
+                                        <button type="submit" id="btnSubmit" onclick="Submit(this)" class="btn btn-dark text-light float-sm-end justify-content-between d-flex align-items-center" style="font-size: 11px; background-color:#55331C"><i class="fa-solid fa-cart-shopping" style="font-size: 15px"></i>Add to cart</button>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="d-flex justify-content-around p-5">
+                        @foreach (var book in Model.GetRange(3, 3).ToList())
+                        {
+                            var money = book.DonGia / 2;
+                            <div class="text-center text-light p-4 rounded-bottom-5 rounded-end-5 d-flex flex-column justify-content-between" style="width: 250px; height: 565px; background-color: #9C7F5B">
+                                <div>
+                                    <img src="@book.Anh" class="d-block" alt="..." style="width: 191px; height: 300px" />
+                                    <div>
+                                        <h6 class="fw-bold">@book.TenSach</h6>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="text-break opacity-50 text-lg-start m-0">@book.TacGia</p>
+                                            <i class="fa-solid fa-heart mx-auto my-lg-1"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-lg-start" style="align-items: baseline">
+                                    <p style="font-size: 18px">@money$ <del style="font-size: 15px">@book.DonGia$</del></p>
+                                    <form action="javascript:void(0)">
+                                        <input name="MaSach" value="@book.MaSach" type="hidden" id="id" />
+                                        <input name="SoLuong" value="1" type="hidden" id="number" />
+                                        <input name="ThanhTien" value="@book.DonGia" type="hidden" id="money" />
+                                        <button type="submit" id="btnSubmit" onclick="Submit(this)" class="btn btn-dark text-light float-sm-end justify-content-between d-flex align-items-center" style="font-size: 11px; background-color:#55331C"><i class="fa-solid fa-cart-shopping" style="font-size: 15px"></i>Add to cart</button>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#special" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" style="color: black" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#special" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.7.1.js"></script>
+    <script type="text/javascript">
+        function Submit(btnClicked) {
+            var $form = $(btnClicked).parent('form');
+
+            $.ajax({
+                type: "POST",
+                url: "/Shop/AddCart",
+                data: $form.serialize(),
+                error: function (error) {
+                    alert(error.message);
+                },
+                success: function (result) {
+                    alert(result.message);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

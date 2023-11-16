@@ -1,0 +1,166 @@
+﻿@model List<StoreBookOnline.Models.GioHang>
+@{
+    ViewBag.Title = "Cart";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <table class="table table-bordered">
+            <thead>
+                <tr class="text-center">
+                    <th>Tên sách</th>
+                    <th>Thể loại</th>
+                    <th>Hình ảnh</th>
+                    <th>Tác giả</th>
+                    <th>Số lượng</th>
+                    <th>Đơn giá</th>
+                    <th>Thành tiền</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center" style="line-height: 157px">
+                            @item.Sach.TenSach
+                        </td>
+                        <td class="text-center" style="line-height: 157px">
+                            @item.Sach.TheLoaiSach.TenLoai
+                        </td>
+                        <td class="text-center">
+                            <img src="@item.Sach.Anh" style="width: 100px" />
+                        </td>
+                        <td class="text-center" style="line-height: 157px">
+                            @item.Sach.TacGia
+                        </td>
+                        <td class="">
+                            <input class="form-control position-sticky text-center" style="top: 50%; transform: translateY(-100%)" placeholder="1" name="SoLuong" />
+                        </td>
+                        <td class="text-center" style="line-height: 157px">
+                            @item.Sach.DonGia
+                        </td>
+                        <td class="text-center" style="line-height: 157px">
+                            @item.ThanhTien
+                        </td>
+                        <td class="text-center" style="">
+                            <div class="text-center position-sticky justify-content-sm-around align-items-center d-flex" style="top: 50%; transform: translateY(-100%)">
+                                <form action="/Cart/Delete" method="post">
+                                    <input name="MaGH" value="@item.MaGH" type="hidden" />
+                                    <input name="MaSach" value="@item.MaSach" type="hidden" />
+                                    <button type="submit" class="btn btn-danger">Xoá</button>
+                                </form>
+                                <div>
+                                    @*<input name="MaGH" value="@item.MaGH" type="hidden" />
+                                    <input name="MaSach" value="@item.MaSach" type="hidden" />*@
+                                    <button onclick="OpenAdd()" class="btn btn-primary">Mua</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id="FormAdd" class="container position-fixed bg-secondary p-3 text-light" style="top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9; display: none">
+            <form action="javascript:void(0)" method="post">
+                <h1>Xác nhận mua</h1>
+                <div class="row">
+                    <div class="col-6">
+                        <label class="form-label">Họ tên:</label>
+                        <label class="form-label" name="HoTenKH">...</label>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">Số điện thoại:</label>
+                        <label class="form-label" name="SDT">...</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <label class="form-label">Email:</label>
+                        <label class="form-label" name="Email">...</label>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">Địa chỉ:</label>
+                        <label class="form-label" name="DiaChi">...</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <label class="form-label">Tên sách:</label>
+                        <label class="form-label" name="TenSach">...</label>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">Số lượng:</label>
+                        <label class="form-label" name="SoLuong">...</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <label class="form-label">Đơn giá:</label>
+                        <label class="form-label" name="DonGia">...</label>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">Thành tiền:</label>
+                        <label class="form-label" name="ThanhTien">...</label>
+                    </div>
+                </div>
+                <div class="d-flex mt-3 justify-content-evenly">
+                    <button type="submit" class="btn btn-success" onclick="Buy(this)">Add</button>
+                    <button type="reset" class="btn btn-warning">Reset</button>
+                    <button onclick="CloseAdd()" class="btn btn-danger">Exit</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.7.1.js"></script>
+    <script type="text/javascript">
+        function Buy(btnClicked) {
+            var $form = $(btnClicked).parent('form');
+
+            $.ajax({
+                type: "POST",
+                url: "/Cart/Buy",
+                data: $form.serialize(),
+                error: function (error) {
+                    alert(error.message);
+                },
+                success: function (result) {
+                    alert(result.message);
+                }
+            });
+        };
+
+        function Delete(btnClicked) {
+            var $form = $(btnClicked).parent('form');
+
+            $.ajax({
+                type: "POST",
+                url: "/Cart/Delete",
+                data: $form.serialize(),
+                error: function (error) {
+                    alert(error.message);
+                },
+                success: function (result) {
+                    alert(result.message);
+                }
+            });
+        };
+
+        function OpenAdd() {
+            document.getElementById('FormAdd').style.display = 'block';
+        };
+
+        function CloseAdd() {
+            document.getElementById('FormAdd').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

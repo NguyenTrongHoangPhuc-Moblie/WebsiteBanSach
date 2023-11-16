@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bad9488c8f5741beb8dafe12c9d5a6b0" Name="Diagram1" ZoomLevel="73">
+        <EntityTypeShape EntityType="BookStoreModel.Admin" Width="1.5" PointX="6.375" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.DonDatHang" Width="1.5" PointX="6.125" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.GioHang" Width="1.5" PointX="0.5" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.HoaDon" Width="1.5" PointX="8.625" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.KhachHang" Width="1.5" PointX="8.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.NCC_Sach" Width="1.5" PointX="4.25" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.NhaCungCap" Width="1.5" PointX="1" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.Sach" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.TheLoaiSach" Width="1.5" PointX="0.5" PointY="3.875" IsExpanded="true" />
+        <AssociationConnector Association="BookStoreModel.FK_dbo_HoaDons_dbo_Admins_Admin_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoreModel.FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoreModel.FK_dbo_DonDatHangs_dbo_Saches_MaSach" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoreModel.FK_dbo_GioHangs_dbo_Saches_MaSach" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoreModel.FK_dbo_NCC_Sach_dbo_NhaCungCaps_MaNCC" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoreModel.FK_dbo_NCC_Sach_dbo_Saches_MaSach" ManuallyRouted="false" />
+        <AssociationConnector Association="BookStoreModel.FK_dbo_Saches_dbo_TheLoaiSaches_TheLoaiSach_MaLoai" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BookStoreModel.C__MigrationHistory" Width="1.5" PointX="10.375" PointY="2.25" />
+        <AssociationConnector Association="BookStoreModel.FK_dbo_HoaDons_dbo_Admins_Admin_Id1" />
+        <AssociationConnector Association="BookStoreModel.FK_dbo_DonDatHangs_dbo_KhachHangs_KhachHang_MaKhach1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

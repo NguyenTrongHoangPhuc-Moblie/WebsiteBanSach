@@ -1,0 +1,131 @@
+﻿@model List<StoreBookOnline.Models.Sach>
+@{
+    ViewBag.Title = "Shop";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style>
+        .carousel-control-prev-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+        }
+
+        .carousel-control-next-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <form action="/shop/index">
+            <div class="row mt-3">
+                <div class="col-6">
+                    <button style="border: none; outline: none; color: #55331C" class="btn w-100" name="name" id="name" value="Trending">Trending</button>
+                </div>
+                <div class="col-6">
+                    <button style="border: none; outline: none; color: #55331C" class="btn w-100" name="name" id="name" value="Release">Release</button>
+                </div>
+            </div>
+        </form>
+
+        <div id="release" class="carousel slide mt-1">
+            <div class="carousel-inner">
+                @for (int i = 0; i < ViewBag.Section; i++)
+                {
+                    var j = i * 3;
+                    if (i == 0)
+                    {
+                        <div class="carousel-item active">
+                            <div class="d-flex justify-content-around">
+                                @foreach (var book in Model.GetRange(j, 3).ToList())
+                                {
+                                    <div class="text-center d-flex flex-column justify-content-between" style="width: 150px">
+                                        <div>
+                                            <img src="@book.Anh" class="d-block" alt="..." style="width: 191px; height: 300px" />
+                                            <div class="d-block" style="word-wrap: break-word;">
+                                                <p style="font-size: 18px">@book.TenSach</p>
+                                                <p class="text-break opacity-50  text-lg-start">@book.TacGia</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between" style="align-items: baseline">
+                                            <p>@book.DonGia $</p>
+                                            <form action="javascript:void(0)">
+                                                <input name="MaSach" value="@book.MaSach" type="hidden" id="id" />
+                                                <input name="SoLuong" value="1" type="hidden" id="number" />
+                                                <input name="ThanhTien" value="@book.DonGia" type="hidden" id="money" />
+                                                <button class="btn" type="submit" id="btnSubmit" onclick="Submit(this)"><i class="fa-solid fa-cart-shopping" style=""></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="carousel-item">
+                            <div class="d-flex justify-content-around">
+                                @foreach (var book in Model.GetRange(j, 3).ToList())
+                                {
+                                    <div class="text-center d-flex flex-column justify-content-between" style="width: 150px">
+                                        <div>
+                                            <img src="@book.Anh" class="d-block" alt="..." style="width: 191px; height: 300px" />
+                                            <div class="d-block" style="word-wrap: break-word;">
+                                                <p style="font-size: 18px">@book.TenSach</p>
+                                                <p class="text-break opacity-50  text-lg-start">@book.TacGia</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between" style="align-items: baseline">
+                                            <p>@book.DonGia $</p>
+                                            <form action="javascript:void(0)">
+                                                <input name="MaSach" value="@book.MaSach" type="hidden" id="id" />
+                                                <input name="SoLuong" value="1" type="hidden" id="number" />
+                                                <input name="ThanhTien" value="@book.DonGia" type="hidden" id="money" />
+                                                <button class="btn" type="submit" id="btnSubmit" onclick="Submit(this)"><i class="fa-solid fa-cart-shopping" style=""></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+
+
+                <button class="carousel-control-prev" type="submit" data-bs-target="#release" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" style="margin-right: auto" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="submit" data-bs-target="#release" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" style="margin-left: auto" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.7.1.js"></script>
+    <script type="text/javascript">
+        function Submit(btnClicked) {
+            var $form = $(btnClicked).parent('form');
+
+            $.ajax({
+                type: "POST",
+                url: "/Shop/AddCart",
+                data: $form.serialize(),
+                error: function (error) {
+                    alert(error.message);
+                },
+                success: function (result) {
+                    alert(result.message);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
