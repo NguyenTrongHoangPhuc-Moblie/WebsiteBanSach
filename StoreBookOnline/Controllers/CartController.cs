@@ -18,6 +18,7 @@ namespace StoreBookOnline.Controllers
             return View(gh);
         }
 
+        [HttpPost]
         public ActionResult Buy(HoaDon hd)
         {
             db = new BookStoreDbContext();

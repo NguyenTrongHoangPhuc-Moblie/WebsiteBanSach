@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Program\Project_VS17\StoreBookOnline\StoreBookOnline\Models\BookStore.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\HUFI\HK_5\LTW\StoreBookOnline\StoreBookOnline\Models\BookStore.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
